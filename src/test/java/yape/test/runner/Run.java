@@ -15,7 +15,7 @@ import com.ibm.icu.impl.InvalidFormatException;
 
 
 
-@CucumberOptions(features = { "src/test/resources/features/" }, tags = { "@FailAuthToken" }, glue = { "yape.test.definition" })
+//@CucumberOptions(features = { "src/test/resources/features/" }, tags = { "@FailAuthToken" }, glue = { "yape.test.definition" })
 
 
 

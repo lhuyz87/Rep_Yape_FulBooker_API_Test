@@ -30,7 +30,7 @@ pipeline {
         stage ('Ejecutar Pruebas') {
         	steps {
         	
-        		withVault([configuration: configuration, vaultSecrets: secrets]) {
+        		
         		script {
         			try {
         				
@@ -42,7 +42,7 @@ pipeline {
         				echo 'Finalizo ejecucion con fallos...'
         				error ('Failed')
                     }
-                    }
+                    
                 }
             }
         }
@@ -54,9 +54,7 @@ pipeline {
                     	//bat ("echo ${WORKSPACE}")
                     	bat ("echo ${defTimestamp}")
                     	publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: "${WORKSPACE}/target/site/serenity", reportFiles: 'index.html', reportName: 'Evidencias de Prueba', reportTitles: 'Reporte de Pruebas'])
-                    	//publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: "${WORKSPACE}/target/site/serenity${defTimestamp}", reportFiles: 'index.html', reportName: 'Evidencias de Prueba', reportTitles: ''])
-                    	//publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: "${WORKSPACE}\\target\\site\\serenity${defTimestamp}", reportFiles: 'index.html', reportName: 'Evidencias de Prueba', reportTitles: ''])
-                        echo 'Reporte realizado con exito'
+                       echo 'Reporte realizado con exito'
                     }
 
                     catch (ex) {
