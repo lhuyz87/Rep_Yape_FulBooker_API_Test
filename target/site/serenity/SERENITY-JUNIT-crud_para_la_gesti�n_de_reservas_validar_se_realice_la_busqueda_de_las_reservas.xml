@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><testsuite errors="1" failures="0" name="CRUD para la gesti�n de reservas" skipped="0" tests="1" time="7.47" timestamp="2022-01-19 04:10:38"><testcase name="Validar se realice la busqueda de las reservas"><error message="Expected BEGIN_OBJECT but was BEGIN_ARRAY at line 1 column 2 path $" type="java.lang.IllegalStateException">Expected BEGIN_OBJECT but was BEGIN_ARRAY at line 1 column 2 path $</error><system-err>Expected BEGIN_OBJECT but was BEGIN_ARRAY at line 1 column 2 path $&#13;
+com.google.gson.stream.JsonReader.beginObject(JsonReader.java:385)&#13;
+com.google.gson.Gson.fromJson(Gson.java:922)&#13;
+com.google.gson.Gson.fromJson(Gson.java:887)&#13;
+com.google.gson.Gson.fromJson(Gson.java:836)&#13;
+com.google.gson.Gson.fromJson(Gson.java:808)&#13;
+io.restassured.internal.path.json.mapping.JsonPathGsonObjectDeserializer.deserialize(JsonPathGsonObjectDeserializer.groovy:39)&#13;
+io.restassured.internal.mapping.GsonMapper.deserialize(GsonMapper.groovy:39)&#13;
+io.restassured.internal.mapping.ObjectMapping.parseWithGson(ObjectMapping.groovy:196)&#13;
+io.restassured.internal.mapping.ObjectMapping.deserialize(ObjectMapping.groovy:61)&#13;
+io.restassured.internal.RestAssuredResponseOptionsGroovyImpl.as(RestAssuredResponseOptionsGroovyImpl.groovy:220)&#13;
+io.restassured.internal.RestAssuredResponseOptionsImpl.as(RestAssuredResponseOptionsImpl.java:166)&#13;
+yape.test.step.ConsultarBookingStep.ejecutarServicio(ConsultarBookingStep.java:53)&#13;
+yape.test.definition.CrudBookingDefinition.realizo_la_consulta(CrudBookingDefinition.java:56)&#13;
+cucumber.runner.Runner.runPickle(Runner.java:80)&#13;
+yape.test.runner.RunPersonalizar.run(RunPersonalizar.java:36)&#13;
+org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:89)&#13;
+org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:40)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:768)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:464)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:210)&#13;
+</system-err></testcase></testsuite>
