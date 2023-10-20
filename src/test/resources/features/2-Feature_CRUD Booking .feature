@@ -5,7 +5,7 @@ Feature: CRUD para la gestión de reservas
     Given que accedo al servicio de "Crear_Reserva"
     And ingreso los valores de la reserva: firstname, lastname, totalprice,depositpaid, checkin, checkout, additionalneeds
       | firstname | lastname | totalprice | depositpaid | checkin    | checkout   | additionalneeds |
-      | Mark      | brown    |        160 | true        | 2014-03-13 | 2014-05-21 | cena            |
+      | Mark      | brown    |        160 | true        | 2023-10-20 | 2023-10-25 | cena            |
     And ejecuto el servicio de creacion
     Then valido que cree el codigo de reserva
 
@@ -35,7 +35,7 @@ Feature: CRUD para la gestión de reservas
       |              7 |
     And ingreso los posibles valores a modificar
       | firstname | lastname | totalprice | depositpaid | checkin    | checkout   | additionalneeds |
-      | Luis      | Retamozo |        120 | true        | 2014-03-13 | 2014-05-21 | almuerzo        |
+      | Luis      | Retamozo |        120 | true        | 2023-10-20 | 2023-10-28 | almuerzo        |
     And realizo la actualización
     Then valido que se muestren los datos actualizados
 
