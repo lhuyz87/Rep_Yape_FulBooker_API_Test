@@ -1,5 +1,6 @@
 import java.text.SimpleDateFormat
 
+
 def defDateFormat = new SimpleDateFormat("yyyyMMddHHmm")
 def defDate = new Date()
 def defTimestamp = defDateFormat.format(defDate).toString()
