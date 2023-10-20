@@ -5,8 +5,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Full_Booker</name>
   <url>http://maven.apache.org</url>
-  <packaging>jar</packaging>
-  
+  <packaging>jar</packaging>  
   <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- <serenity.version>2.0.39</serenity.version> -->
