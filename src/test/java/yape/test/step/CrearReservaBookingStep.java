@@ -18,8 +18,10 @@ public class CrearReservaBookingStep {
 	private CrearReservaRequest crearReservaRequest;
 	@Steps
 	private ResponseServices responseServices;
-	@Steps
-	private BodyCrearReservaResponse bodyCrearReservaResponse;
+
+	BodyCrearReservaResponse bodyCrearReservaResponse;
+	
+	
 	String body="";
 	public static String firstname="";
 	public static String lastname="";
@@ -42,10 +44,12 @@ public class CrearReservaBookingStep {
 		body = crearReservaRequest.crearReserva(firstname, lastname, totalprice, depositpaid, checkin, checkout, additionalneeds);
 	}
 	
-	@Step("Se debe obtener una respuesta exitosa del servicio")
+	@Step()
 	public BodyCrearReservaResponse ejecutarServicio() {
+		
 		Response response =  responseServices.ejecutarServicioPost(Variables.endPoint, util.metodoServicio, body, "","");
 		response.then().assertThat().statusCode(200);
+//		System.out.println("Response"+ response.then().extract().body().asString());
 		if(response.getStatusCode()==200) {
 			bodyCrearReservaResponse = response.then().extract().body().as(BodyCrearReservaResponse.class);
 		}else {

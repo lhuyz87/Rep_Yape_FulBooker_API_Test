@@ -14,7 +14,7 @@ Feature: CRUD para la gestión de reservas
     Given que accedo al servicio de "Consulta_Reservas"
     And ingreso los parametros de busqueda: firstname y/o lastname y/o  checkin y/o checkout
       | firstname | lastname | checkin | checkout |
-      | Luis      | Retamozo | NA      | NA       |
+      | John      | Smith | NA      | NA       |
     And realizo la consulta
     Then valido que se realice correctamente la busqueda
 
@@ -23,7 +23,7 @@ Feature: CRUD para la gestión de reservas
     Given que accedo al servicio de "Consulta_Detalle_Reserva"
     And ingreso el código de reserva
       | bookingID |
-      |        32 |
+      |        15 |
     And realizo la consulta por código de reserva
     Then valido que se muestre los datos de la busqueda
 
@@ -32,7 +32,7 @@ Feature: CRUD para la gestión de reservas
     Given genero token y accedo al servicio de "Actualizar_Datos_Reserva"
     And ingreso el parámetro codigo de reserva
       | codigo_reserva |
-      |              7 |
+      |             15 |
     And ingreso los posibles valores a modificar
       | firstname | lastname | totalprice | depositpaid | checkin    | checkout   | additionalneeds |
       | Luis      | Retamozo |        120 | true        | 2023-10-20 | 2023-10-28 | almuerzo        |
@@ -56,6 +56,6 @@ Feature: CRUD para la gestión de reservas
     Given genero token y accedo al servicio de "Borrar_Reserva"
     And ingreso el parámetro codigo de reserva a eliminar
       | codigo_reserva |
-      |             20 |
+      |             15 |
     And ejecuto la eliminación
     Then valido que se muestre como resultado de la eliminacion el valor "Created"

@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="0" name="CRUD para la gestión de reservas" skipped="0" tests="1" time="6.66" timestamp="2022-01-19 09:00:21"><testcase name="Validar se realice la busqueda del detalle por reserva"/></testsuite>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><testsuite errors="0" failures="0" name="CRUD para la gestión de reservas" skipped="0" tests="1" time="9.36" timestamp="2023-10-24 10:41:10"><testcase name="Validar se realice la busqueda del detalle por reserva"/></testsuite>

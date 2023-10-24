@@ -13,9 +13,9 @@
         <!-- <serenity.maven.version>2.0.39</serenity.maven.version> -->
         <!-- <serenity.cucumber.version>1.9.30</serenity.cucumber.version> -->
         <!-- <serenity.version>2.0.81</serenity.version> -->
-        <serenity.version>2.0.81</serenity.version>
-        <serenity.maven.version>2.0.48</serenity.maven.version>
-        <serenity.cucumber.version>1.9.45</serenity.cucumber.version>
+		<serenity.version>3.2.4</serenity.version>
+		<serenity.maven.version>3.2.4</serenity.maven.version>
+		<serenity.cucumber.version>3.2.4</serenity.cucumber.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <tags></tags>
@@ -77,6 +77,24 @@
 		    <artifactId>jaxb-api</artifactId>
 		    <version>2.3.0</version>
 		</dependency>
+		
+		<dependency>
+      		<groupId>com.googlecode.json-simple</groupId>
+      		<artifactId>json-simple</artifactId>
+      		<version>1.1.1</version>
+   		</dependency>
+   		<dependency>
+		    <groupId>nio</groupId>
+		    <artifactId>nio</artifactId>
+		    <version>1.0.4</version>
+		</dependency>
+		
+				<!-- https://mvnrepository.com/artifact/io.cucumber/datatable -->
+		<dependency>
+		    <groupId>io.cucumber</groupId>
+		    <artifactId>datatable</artifactId>
+		    <version>7.2.3</version>
+		</dependency>
 		    
     </dependencies>
     
@@ -91,7 +109,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-surefire-plugin</artifactId>
-						<version>2.18.1</version>
+						<version>3.0.0-M5</version>
 						<configuration>
 							<argLine>-Dfile.encoding=UTF-8</argLine>
 							<includes>
@@ -108,9 +126,8 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.20.1</version>
+				<version>3.0.0-M5</version>
 				<configuration>
-					<argLine>-Dfile.encoding=UTF-8</argLine>
 					<testFailureIgnore>true</testFailureIgnore>
 					<includes>
 						<include>**/**Run**.java</include>
@@ -128,9 +145,6 @@
 					<includes>
 						<!-- <include>**/**Runner**.java</include> -->
 					</includes>
-					<systemPropertyVariables>
-						<webdriver.base.url>${webdriver.base.url}</webdriver.base.url>
-					</systemPropertyVariables>
 					<parallel>classes</parallel>
 					<threadCount>${parallel.tests}</threadCount>
 					<forkCount>${parallel.tests}</forkCount>

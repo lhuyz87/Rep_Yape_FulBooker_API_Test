@@ -1,6 +1,6 @@
 package yape.test.runner;
 
-import cucumber.api.CucumberOptions;
+import io.cucumber.junit.CucumberOptions;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import com.ibm.icu.impl.InvalidFormatException;
 
 
 
-//@CucumberOptions(features = { "src/test/resources/features/" }, tags = { "@CrearReserva" }, glue = { "yape.test.definition" })
+//@CucumberOptions(features =  "src/test/resources/features/" , tags = "@BorrarReserva", glue = "yape.test.definition" )
 
 
 

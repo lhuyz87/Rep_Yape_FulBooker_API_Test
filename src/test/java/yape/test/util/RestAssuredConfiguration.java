@@ -4,6 +4,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import net.serenitybdd.core.Serenity;
+
 import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 
@@ -138,6 +140,9 @@ public class RestAssuredConfiguration {
     public Response getResponseTotalPost(RequestSpecification requestSpecification, String endpoint) {
         requestSpecification.log().all();
         Response response = requestSpecification.post(endpoint);
+        Serenity.recordReportData()
+        .withTitle("Solicitud REST")
+        .andContents(requestSpecification.toString());
         response.then().log().all();
         return response;
     }

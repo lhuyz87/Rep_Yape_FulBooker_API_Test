@@ -1,20 +1,23 @@
 package yape.test.definition;
 
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.And;
 import net.thucydides.core.annotations.Steps;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
+import java.util.Map;
 
-import org.jruby.RubyProcess.Sys;
+//import org.jruby.RubyProcess.Sys;
 
-import cucumber.api.DataTable;
+
 import yape.test.response.AuthResponse;
-import yape.test.response.BodyActualizarReservaResponse;
+import yape.test.response.Booking;
 import yape.test.response.BodyConsDetReservaResponse;
 import yape.test.response.BodyCrearReservaResponse;
 import yape.test.step.ActualizarReservaBookingStep;
@@ -30,25 +33,25 @@ import io.restassured.response.Response;
 public class CrudBookingDefinition {
 
 	@Steps
-	private ConsultarBookingStep consultarBookingStep;
+	ConsultarBookingStep consultarBookingStep;
 	@Steps
-	private BodyCrearReservaResponse bodyCrearReservaResponse;
+	BodyCrearReservaResponse bodyCrearReservaResponse;
 	@Steps
-	private UtilReport utilReport;	
+	UtilReport utilReport;	
 	@Steps
-	private CrearReservaBookingStep crearReservaBookingStep;
+	CrearReservaBookingStep crearReservaBookingStep;
 	@Steps
-	private BodyConsDetReservaResponse bodyConsDetReservaResponse;
+	BodyConsDetReservaResponse bodyConsDetReservaResponse;
 	@Steps
-	private ActualizarReservaBookingStep actualizarReservaBookingStep;
+	ActualizarReservaBookingStep actualizarReservaBookingStep;
 	@Steps
-	private StepAutenticacion stepAutenticacion;
+	StepAutenticacion stepAutenticacion;
 	@Steps
-	private AuthResponse authResponse;
+	AuthResponse authResponse;
 	@Steps
-	private BodyActualizarReservaResponse bodyActualizarReservaResponse;
+	Booking bodyActualizarReservaResponse;
 	@Steps
-	private EliminarReservaBookingStep eliminarReservaBookingStep;
+	EliminarReservaBookingStep eliminarReservaBookingStep;
 	
 	
 
@@ -62,20 +65,20 @@ public class CrudBookingDefinition {
 
 
 	@Given("^ingreso los valores de la reserva: firstname, lastname, totalprice,depositpaid, checkin, checkout, additionalneeds$")
-	public void ingreso_los_valores_de_la_reserva_firstname_lastname_totalprice_depositpaid_checkin_checkout_additionalneeds(DataTable table) {
-		CucumberNewUtil.ConvertDataTableToDict(table);
-        List<List<String>> data = table.raw();
+	public void ingreso_los_valores_de_la_reserva_firstname_lastname_totalprice_depositpaid_checkin_checkout_additionalneeds(DataTable valorReserva) {
+	
+		List<Map<String, String>> tableValorReserva = valorReserva.asMaps(String.class, String.class);
 
-        for (int i = 1; i < data.size(); i++) {
-        	crearReservaBookingStep.firstname = CucumberNewUtil.GetCellValueWithRowIndex("firstname", i);
-        	crearReservaBookingStep.lastname = CucumberNewUtil.GetCellValueWithRowIndex("lastname", i);
-        	crearReservaBookingStep.totalprice = CucumberNewUtil.GetCellValueWithRowIndex("totalprice", i);
-        	crearReservaBookingStep.depositpaid = CucumberNewUtil.GetCellValueWithRowIndex("depositpaid", i);
-        	crearReservaBookingStep.checkin = CucumberNewUtil.GetCellValueWithRowIndex("checkin", i);
-        	crearReservaBookingStep.checkout = CucumberNewUtil.GetCellValueWithRowIndex("checkout", i);
-        	crearReservaBookingStep.additionalneeds = CucumberNewUtil.GetCellValueWithRowIndex("additionalneeds", i);
+
+        	crearReservaBookingStep.firstname = tableValorReserva.get(0).get("firstname");
+        	crearReservaBookingStep.lastname= tableValorReserva.get(0).get("lastname");
+        	crearReservaBookingStep.totalprice= tableValorReserva.get(0).get("totalprice");
+        	crearReservaBookingStep.depositpaid= tableValorReserva.get(0).get("depositpaid");
+        	crearReservaBookingStep.checkin = tableValorReserva.get(0).get("checkin");
+        	crearReservaBookingStep.checkin = tableValorReserva.get(0).get("checkin");
+        	crearReservaBookingStep.additionalneeds = tableValorReserva.get(0).get("additionalneeds");
         	crearReservaBookingStep.ingresarValoresReserva();
-        }
+
 	    
 	}
 	
@@ -104,23 +107,24 @@ public class CrudBookingDefinition {
 
 	@Then("^valido que cree el codigo de reserva$")
 	public void valido_que_cree_el_codigo_de_reserva_y_muestre_los_datos_ingresados() {
-		  assertNotNull(bodyCrearReservaResponse.getBookingId());
-		  utilReport.showStepMessage("Booking ID "+bodyCrearReservaResponse.getBookingId());
+		  assertNotNull(bodyCrearReservaResponse.getBookingid());
+		  utilReport.showStepMessage("Booking ID "+bodyCrearReservaResponse.getBookingid());
 	    
 	}
 
 	@Given("^ingreso los parametros de busqueda: firstname y/o lastname y/o  checkin y/o checkout$")
-	public void ingreso_los_parametros_de_busqueda_firstname_y_o_lastname_y_o_checkin_y_o_checkout(DataTable table) {
-		CucumberNewUtil.ConvertDataTableToDict(table);
+	public void ingreso_los_parametros_de_busqueda_firstname_y_o_lastname_y_o_checkin_y_o_checkout(DataTable busqueda) {
+		List<Map<String, String>> tablaBusqueda = busqueda.asMaps(String.class, String.class);
 		
 		String cadena="";
-        List<List<String>> data = table.raw();
+       
         
-        for (int i = 1; i < data.size(); i++) {
-        	ConsultarBookingStep.firstname = CucumberNewUtil.GetCellValueWithRowIndex("firstname", i);
-        	ConsultarBookingStep.lastname = CucumberNewUtil.GetCellValueWithRowIndex("lastname", i);
-           	ConsultarBookingStep.checkin = CucumberNewUtil.GetCellValueWithRowIndex("checkin", i);
-           	ConsultarBookingStep.checkout = CucumberNewUtil.GetCellValueWithRowIndex("checkout", i);
+       
+        	ConsultarBookingStep.firstname = tablaBusqueda.get(0).get("firstname");
+        	ConsultarBookingStep.lastname = tablaBusqueda.get(0).get("lastname");
+        	ConsultarBookingStep.checkin =	tablaBusqueda.get(0).get("checkin");	
+        	ConsultarBookingStep.checkout = tablaBusqueda.get(0).get("checkout");
+
         	
            	
            	if(ConsultarBookingStep.firstname.compareTo("NA")!=0) {
@@ -144,17 +148,17 @@ public class CrudBookingDefinition {
         	}
         	ConsultarBookingStep.parametros=cadena;
 //        	System.out.println("+*******+ "  + ConsultarBookingStep.parametros);
-            
-        }
+
 	    
 	}
 	
 	@Given("^ingreso el código de reserva$")
-	public void ingreso_el_código_de_reserva(DataTable table) {
-		CucumberNewUtil.ConvertDataTableToDict(table);
-        List<List<String>> data = table.raw();
-        ConsultarBookingStep.bookingID=CucumberNewUtil.GetCellValueWithRowIndex("bookingID", 1);
-        
+	public void ingreso_el_código_de_reserva(DataTable reserva) {
+		
+		List<Map<String, String>> tablaReerva = reserva.asMaps(String.class, String.class);
+
+        ConsultarBookingStep.bookingID=tablaReerva.get(0).get("bookingID");
+      
 	}
 	
 	@Given("^realizo la consulta por código de reserva$")
@@ -165,9 +169,9 @@ public class CrudBookingDefinition {
 
 	@Then("^valido que se muestre los datos de la busqueda$")
 	public void valido_que_se_muestre_los_datos_de_la_busqueda() {
-		  assertNotNull(bodyConsDetReservaResponse.getFirstName());
-		  assertNotNull(bodyConsDetReservaResponse.getLastName());
-		  utilReport.showStepMessage("Reserva de: "+bodyConsDetReservaResponse.getFirstName() +" - " + bodyConsDetReservaResponse.getLastName());
+		  assertNotNull(bodyConsDetReservaResponse.getFirstname());
+		  assertNotNull(bodyConsDetReservaResponse.getLastname());
+		  utilReport.showStepMessage("Reserva de: "+bodyConsDetReservaResponse.getFirstname() +" - " + bodyConsDetReservaResponse.getLastname());
 	    
 	}
 
@@ -176,18 +180,20 @@ public class CrudBookingDefinition {
 
 
 	@Given("^ingreso el parámetro codigo de reserva$")
-	public void ingreso_el_par_metro_codigo_de_reserva(DataTable table) {
-		CucumberNewUtil.ConvertDataTableToDict(table);
-        List<List<String>> data = table.raw();
-        actualizarReservaBookingStep.bookingId=CucumberNewUtil.GetCellValueWithRowIndex("codigo_reserva", 1);
+	public void ingreso_el_par_metro_codigo_de_reserva(DataTable reserva) {
+		
+		List<Map<String, String>> tablaReerva = reserva.asMaps(String.class, String.class);
+
+        actualizarReservaBookingStep.bookingId=tablaReerva.get(0).get("codigo_reserva");
+
 	    
 	}
 	
 	@Given("^ingreso el parámetro codigo de reserva a eliminar$")
-	public void ingreso_el_par_metro_codigo_de_reserva_eliminar(DataTable table) {
-		CucumberNewUtil.ConvertDataTableToDict(table);
-        List<List<String>> data = table.raw();
-        EliminarReservaBookingStep.bookingId=CucumberNewUtil.GetCellValueWithRowIndex("codigo_reserva", 1);
+	public void ingreso_el_par_metro_codigo_de_reserva_eliminar(DataTable reserva) {
+		List<Map<String, String>> tablaReerva = reserva.asMaps(String.class, String.class);
+
+        actualizarReservaBookingStep.bookingId=tablaReerva.get(0).get("codigo_reserva");
 	    
 	}
 	
@@ -209,16 +215,21 @@ public class CrudBookingDefinition {
 	
 
 	@Given("^ingreso los posibles valores a modificar$")
-	public void ingreso_los_posibles_valores_a_modificar(DataTable table) {
-		CucumberNewUtil.ConvertDataTableToDict(table);
-        List<List<String>> data = table.raw(); 
-		actualizarReservaBookingStep.firstname = CucumberNewUtil.GetCellValueWithRowIndex("firstname", 1);
-		actualizarReservaBookingStep.lastname = CucumberNewUtil.GetCellValueWithRowIndex("lastname", 1);
-		actualizarReservaBookingStep.totalprice = CucumberNewUtil.GetCellValueWithRowIndex("totalprice", 1);
-		actualizarReservaBookingStep.depositpaid = CucumberNewUtil.GetCellValueWithRowIndex("depositpaid", 1);
-		actualizarReservaBookingStep.checkin = CucumberNewUtil.GetCellValueWithRowIndex("checkin", 1);
-		actualizarReservaBookingStep.checkout = CucumberNewUtil.GetCellValueWithRowIndex("checkout", 1);
-		actualizarReservaBookingStep.additionalneeds = CucumberNewUtil.GetCellValueWithRowIndex("additionalneeds", 1);       
+	public void ingreso_los_posibles_valores_a_modificar(DataTable datos) {
+
+		
+		
+		List<Map<String, String>> tablaDatos = datos.asMaps(String.class, String.class);
+
+
+		actualizarReservaBookingStep.firstname = tablaDatos.get(0).get("firstname");
+
+		actualizarReservaBookingStep.lastname = tablaDatos.get(0).get("lastname");
+		actualizarReservaBookingStep.totalprice =tablaDatos.get(0).get("totalprice"); 
+		actualizarReservaBookingStep.depositpaid =tablaDatos.get(0).get("depositpaid");
+		actualizarReservaBookingStep.checkin =tablaDatos.get(0).get("checkin"); 
+		actualizarReservaBookingStep.checkout =tablaDatos.get(0).get("checkout"); 
+		actualizarReservaBookingStep.additionalneeds = tablaDatos.get(0).get("additionalneeds");      
 		
 		actualizarReservaBookingStep.ingresarValoresActualizarReserva();
 	}
@@ -236,11 +247,10 @@ public class CrudBookingDefinition {
 	}
 	
 	@Given("^ingreso los valores para la actualización$")
-	public void ingreso_los_valores_para_la_actualización(DataTable table) {
-		CucumberNewUtil.ConvertDataTableToDict(table);
-        List<List<String>> data = table.raw(); 
-		actualizarReservaBookingStep.firstname = CucumberNewUtil.GetCellValueWithRowIndex("firstname", 1);
-		actualizarReservaBookingStep.lastname = CucumberNewUtil.GetCellValueWithRowIndex("lastname", 1);
+	public void ingreso_los_valores_para_la_actualización(DataTable datos) {
+		List<Map<String, String>> tablaDatos = datos.asMaps(String.class, String.class);
+		actualizarReservaBookingStep.firstname = tablaDatos.get(0).get("firstname");
+		actualizarReservaBookingStep.lastname = tablaDatos.get(0).get("lastname");
 		actualizarReservaBookingStep.ingresarValoresActualizarParcialReserva();
 
 	}

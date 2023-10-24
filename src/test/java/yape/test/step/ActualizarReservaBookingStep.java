@@ -9,7 +9,7 @@ import yape.test.request.ActualizarParcialReservaRequest;
 import yape.test.request.ActualizarReservaRequest;
 import yape.test.request.CrearReservaRequest;
 import yape.test.response.AuthResponse;
-import yape.test.response.BodyActualizarReservaResponse;
+import yape.test.response.Booking;
 import yape.test.response.BodyCrearReservaResponse;
 import yape.test.util.ResponseServices;
 import yape.test.util.Util;
@@ -24,7 +24,7 @@ public class ActualizarReservaBookingStep {
 	@Steps
 	private ActualizarReservaRequest actualizarReservaRequest;
 	@Steps
-	private BodyActualizarReservaResponse bodyActualizarReservaResponse;
+	private Booking booking;
 	@Steps
 	private ActualizarParcialReservaRequest actualizarParcialReservaRequest;
 	
@@ -64,51 +64,51 @@ public class ActualizarReservaBookingStep {
 	}
 	
 	@Step("Se debe obtener una respuesta exitosa del servicio")
-	public BodyActualizarReservaResponse ejecutarServicio() {
+	public Booking ejecutarServicio() {
 		Response response =  responseServices.ejecutarServicioPutToken(Variables.endPoint, util.metodoServicio, body, bookingId,"",token);
 		response.then().assertThat().statusCode(200);
 		if(response.getStatusCode()==200) {
-			bodyActualizarReservaResponse = response.then().extract().body().as(BodyActualizarReservaResponse.class);
+			booking = response.then().extract().body().as(Booking.class);
 		}else {
 			if(response.getStatusCode()!=200) {
-				bodyActualizarReservaResponse = response.then().extract().body().as(BodyActualizarReservaResponse.class);
+				booking = response.then().extract().body().as(Booking.class);
 			}
 		}
 		
-		return bodyActualizarReservaResponse;
+		return booking;
 	}
 	
 	public void validarResultados() {
-		   assertEquals(firstname,bodyActualizarReservaResponse.getFirstname());
-		    assertEquals(lastname,bodyActualizarReservaResponse.getLastname());
-		    assertEquals(totalprice,""+bodyActualizarReservaResponse.getTotalprice());
-		    assertEquals(additionalneeds,bodyActualizarReservaResponse.getAdditionalneeds());
-		    assertEquals(checkin,bodyActualizarReservaResponse.getActualizarReservaBookingdatesResponse().getCheckin());
-		    assertEquals(checkout,bodyActualizarReservaResponse.getActualizarReservaBookingdatesResponse().getCheckout());
+		   assertEquals(firstname,booking.getFirstname());
+		    assertEquals(lastname,booking.getLastname());
+		    assertEquals(totalprice,""+booking.getTotalprice());
+		    assertEquals(additionalneeds,booking.getAdditionalneeds());
+		    assertEquals(checkin,booking.getBookingdates().getCheckin());
+		    assertEquals(checkout,booking.getBookingdates().getCheckout());
 
 	}
 	
 	public void validarResultadosActParcial() {
-		   assertEquals(firstname,bodyActualizarReservaResponse.getFirstname());
-		    assertEquals(lastname,bodyActualizarReservaResponse.getLastname());
+		   assertEquals(firstname,booking.getFirstname());
+		    assertEquals(lastname,booking.getLastname());
 		   
 
 	}
 	
 	@Step("Se debe obtener una respuesta exitosa del servicio")
-	public BodyActualizarReservaResponse ejecutarServicioActualParcial() {
+	public Booking ejecutarServicioActualParcial() {
 		Response response =  responseServices.ejecutarServicioPatchToken(Variables.endPoint, util.metodoServicio, body, bookingId,"",token);
 		response.then().assertThat().statusCode(200);
 		if(response.getStatusCode()==200) {
-			bodyActualizarReservaResponse = response.then().extract().body().as(BodyActualizarReservaResponse.class);
+			booking = response.then().extract().body().as(Booking.class);
 		}else {
 			if(response.getStatusCode()!=200) {
-				bodyActualizarReservaResponse = response.then().extract().body().as(BodyActualizarReservaResponse.class);
+				booking = response.then().extract().body().as(Booking.class);
 			}
 		}
 
 				
-		return bodyActualizarReservaResponse;
+		return booking;
 	}
 	
 	

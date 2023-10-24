@@ -4,12 +4,12 @@ package yape.test.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class ActualizarReservaBookingdatesResponse {
+public class Bookingdates {
 	
 	@SerializedName("checkin")
 	@Expose
 	private String checkin;
-	@SerializedName("checkout")
+	@SerializedName("checkin")
 	@Expose
 	private String checkout;
 	public String getCheckin() {
@@ -24,6 +24,8 @@ public class ActualizarReservaBookingdatesResponse {
 	public void setCheckout(String checkout) {
 		this.checkout = checkout;
 	}
+	
+	
 	
 	
 

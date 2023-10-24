@@ -19,47 +19,87 @@
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <meta name="msapplication-TileColor" content="#ffffff">
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
-<!--[if IE 7]>
-<!--<link rel="stylesheet" href="font-awesome/css/font-awesome-ie7.min.css">-->
-
-<link rel="stylesheet" type="text/css" href="fontawesome-free-5.7.2-web/css/all.min.css">
-<link rel="stylesheet" type="text/css" href="fontawesome-free-5.7.2-web/css/v4-shims.min.css">
-
-<!-- JQuery -->
-<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script><link rel="stylesheet" type="text/css" href="chartist/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.css">
-<link rel="stylesheet" type="text/css" href="chartist/dist/chartist.min.css">
-<script src="chartist/dist/chartist.min.js"></script>
-<script src="chartist/chartist-plugin-tooltip/dist/chartist-plugin-tooltip.min.js"></script>
-<!-- Required Stylesheets -->
+<meta name="theme-color" content="#ffffff"><link rel="stylesheet" href="bootstrap-icons/font/bootstrap-icons.css"><!-- JQuery -->
+<script type="text/javascript" src="scripts/jquery-1.11.1.min.js"></script><!-- Required Stylesheets -->
 <link href="bootstrap-treeview/dist/bootstrap-treeview.min.css" rel="stylesheet">
 
 <!-- Required Javascript -->
 <script src="bootstrap-treeview/dist/bootstrap-treeview.min.js"></script><!-- DataTables -->
-<link type="text/css" href="datatables/1.10.19/datatables.min.css" rel="stylesheet" />
-<script type="text/javascript" src="datatables/1.10.19/datatables.min.js"></script>
+<link type="text/css" href="datatables/1.11.3/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.11.3/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.11.3/time-elapsed-dhms.js"></script>
 
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="bootstrap/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="datatables/1.10.19/datatables.bootstrap4.min.js"></script>
-<link type="text/css" href="datatables/1.10.19/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
 <link rel="stylesheet" href="css/core.css"/>
 <link rel="stylesheet" href="css/link.css"/>
-<link type="text/css" media="screen" href="css/screen.css" rel="Stylesheet"/><!-- JQuery-UI -->
+<link type="text/css" media="screen" href="css/screen.css" rel="Stylesheet"/>
+<!--CHART.JS-->
+<script src="chartjs/chart.js"></script>
+<script src="chartjs/chartjs-plugin-datalabels@2.0.0"></script>
+<script src="chartjs/patternomaly.min.js"></script>
+<script>
+    // Register the plugin to all charts:
+    Chart.register(ChartDataLabels);
+</script>
+<!-- JQuery-UI -->
 <link type="text/css" href="jqueryui/1.11.2-start/jquery-ui.min.css" rel="Stylesheet" />
 <script type="text/javascript" src="jqueryui/1.11.2-start/jquery-ui.min.js"></script><!-- DataTables -->
-<link type="text/css" href="datatables/1.10.19/datatables.min.css" rel="stylesheet" />
-<script type="text/javascript" src="datatables/1.10.19/datatables.min.js"></script>
+<link type="text/css" href="datatables/1.11.3/datatables.min.css" rel="stylesheet" />
+<script type="text/javascript" src="datatables/1.11.3/datatables.min.js"></script>
+<script type="text/javascript" src="datatables/1.11.3/time-elapsed-dhms.js"></script>
 
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <script src="bootstrap/js/bootstrap.min.js"></script>
 
-<script type="text/javascript" src="datatables/1.10.19/datatables.bootstrap4.min.js"></script>
-<link type="text/css" href="datatables/1.10.19/datatables.bootstrap4.min.css" rel="stylesheet" />
+
+<script>
+    jQuery.fn.dataTable.ext.type.order['time-elapsed-dhms-pre'] = function(data) {
+
+        var matches = data.match(/^(\d+(?:\.\d+)?)\s*([a-z]+)/i);
+        var multipliers = {
+            ms: 1,
+            s: 1000,
+            m: 60000,
+            h: 3600000,
+            d: 86400000
+        };
+
+        if (matches) {
+            var multiplier = multipliers[matches[2].toLowerCase()];
+            return parseFloat(matches[1]) * multiplier;
+        } else {
+            return -1;
+        };
+    };
+</script>
 <!-- ImgPreview -->
 <script src="scripts/imgpreview.full.jquery.js" type="text/javascript"></script>
 </head>
+
+<body class="results-page">
 
 
 <div id="topheader">
@@ -80,7 +120,8 @@
         <span class="breadcrumbs">
             <a href="index.html" class="breadcrumbs">Home</a>
 
-            > <a href="feature_crud_para_la_gestión_de_reservas.html">CRUD Para La Gesti&oacute;n De Reservas</a>
+ <!-- inflection.of(breadcrumb.displayName).asATitle()-->
+            > <a href="feature_crud_para_la_gestión_de_reservas.html">CRUD para la gesti&oacute;n de reservas</a>
         > Validar se realice la busqueda de las reservas
         </span>
         </div>
@@ -93,16 +134,16 @@
 <div>
     <ul class="nav nav-tabs" role="tablist">
         <li class="active">
-            <a href="#"><i class="fa fa-check-square-o"></i> Overall Test Results</a>
+            <a href="#"><i class="bi bi-journal-check"></i> Overall Test Results</a>
         </li>
         <li >
-            <a href="capabilities.html"><i class="fa fa-book"></i> Requirements</a>
+            <a href="capabilities.html"><i class="bi bi-journal-text"></i> Requirements</a>
         </li>
         <li >
-            <a href="requirement_type_feature.html"><i class="fa fa-comments-o"></i> Features</a>
+            <a href="requirement_type_feature.html"><i class="bi bi-chat-text"></i> Features</a>
         </li>
     </ul>
-    <span class="date-and-time"><a href="build-info.html"><i class="fa fa-info-circle"></i></a> Report generated 19-01-2022 22:25</span>
+    <span class="date-and-time"><a href="build-info.html"><i class="bi bi-info-circle"></i></a> Report generated 24-10-2023 11:34</span>
     <br style="clear:left"/>
 </div>
     <div class="clr"></div>
@@ -116,24 +157,21 @@
                         <td>
                                 <div>
                                     <h3 class="discreet-story-header">
-                                        <i class="fa fa-2x fa-comments-o"></i>
+                                        <i class="fs-2 bi bi-chat-left-quote title-icon"></i>
                                         <span class="story-header-title">CRUD Para La Gestión De Reservas </span>
                                     </h3>
 
-                                    <div class="discreet-requirement-narrative-title">
-                                        
-                                    </div>
                                 </div>
 
                         </td>
                         <td valign="top">
-                                <p class="tag">
-                                    <span class="badge tag-badge" style="background:default;">
-                                    <i class="fa fa-tag"></i>&nbsp;<a class="tagLink" style="background:default;"
-                                                                      href="tag_buscarreserva.html">Buscarreserva
+                            <p class="tag">
+                                    <span class="badge example-tag tag-badge" style="background:default;">
+                                    <i class="bi bi-tag-fill"></i>&nbsp;<a class="tagLink" style="background:default;"
+                                                                      href="tag_buscarreserva.html">Buscar Reserva
                                     (tag)</a>
                                 </span>
-                                </p>
+                            </p>
                         </td>
                     </tr>
                 </table>
@@ -142,7 +180,7 @@
                 <table class="outcome-header">
                     <tr>
                         <td colspan="2" class="test-title-bar">
-                            <span class="outcome-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon fa-2x' title='SUCCESS'></i></a></span>
+                            <span class="outcome-icon"><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon fa-2x' title='SUCCESS'></i></a></span>
                             <span class="test-case-title">
                                 <span class="success-color">
                                     Validar se realice la busqueda de las reservas
@@ -157,258 +195,277 @@
 
 
 
-        </div>
-    </div>
+</div>
+</div>
 
-    <div class="clr"></div>
-
-
-    <div id="beforetable"></div>
+<div class="clr"></div>
 
 
-    <div id="tablecontents">
-        <div>
-            <table class="step-table">
-                <tr class="step-titles">
-                    <th width="65">                        &nbsp;
-                    </th>
+<div id="beforetable"></div>
 
-                        <th width="%"
-                            class="step-description-wide-column greentext">
-                            Steps
-                        </th>
-                    <th width="130" class="greentext">Outcome</th>
-                    <th width="80" class="greentext"><i title="Duration" class="far fa-clock"></i></th>
-                </tr>
-                <tr class="step-table-separator">
-                    <td colspan="5"></td>
-                </tr>
+
+<div id="tablecontents">
+    <div>
+        <table class="step-table">
+            <tr class="step-titles">
+                <th width="65">
+                </th>
+                <th class="step-description-column greentext">
+                    Steps
+                </th>
+
+                <th width="130" class="greentext">Outcome</th>
+                <th width="100" class="greentext"><i title="Duration" class="bi bi-stopwatch"></i></th>
+            </tr>
+            <tr class="step-table-separator">
+                <td colspan="5"></td>
+            </tr>
+
                 <tr class="test-SUCCESS">
+
                     <td width="50" class="step-icon">
-                        <a name="0"/>
-                            <span style="margin-left: 20px; margin-right: 5px;"
-                                  class="top-level-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a></span>
+                        <a name="0"></a>
+                            <span style="margin-left: 20px;"
+                                  class="top-level-icon"><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a>
+                                </span>
                     </td>
-                    <td>
+
+                    <td class="step-description-column">
                         <div class="step-description">
                                 <span class="top-level-step">
-                                Given que accedo al servicio de "Consulta_Reservas"
-                            </span>
+                                                Given que accedo al servicio de "Consulta_Reservas"
+                                        </span>
                             <span class="evidence">
-                            </span>
+                                </span>
                         </div>
                     </td>
-                    <td width="100"><span class="top-level-step">SUCCESS</span></td>
-                    <td width="100"><span class="top-level-step">0.52s</span></td>
+
+                    <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                    <td width="100"><span class="top-level-step">964ms</span></td>
                 </tr>
                 <tr class="test-SUCCESS">
+
                     <td width="50" class="step-icon">
-                        <a name="1"/>
-                            <span style="margin-left: 20px; margin-right: 5px;"
-                                  class="top-level-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a></span>
+                        <a name="1"></a>
+                            <span style="margin-left: 20px;"
+                                  class="top-level-icon"><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a>
+                                </span>
                     </td>
-                    <td>
+
+                    <td class="step-description-column">
                         <div class="step-description">
                                 <span class="top-level-step">
-                                And ingreso los parametros de busqueda: firstname y/o lastname y/o  checkin y/o checkout<br><table class='embedded'><thead><th>firstname</th><th>lastname</th><th>checkin</th><th>checkout</th></thead><tbody><tr><td>Luis</td><td>Retamozo</td><td>NA</td><td>NA</td></tr></tbody></table>
-                            </span>
+                                                And ingreso los parametros de busqueda: firstname y/o lastname y/o  checkin y/o checkout<br><table class='embedded'><thead><th>firstname</th><th>lastname</th><th>checkin</th><th>checkout</th></thead><tbody><tr><td>John</td><td>Smith</td><td>NA</td><td>NA</td></tr></tbody></table>
+                                        </span>
                             <span class="evidence">
-                            </span>
+                                </span>
                         </div>
                     </td>
-                    <td width="100"><span class="top-level-step">SUCCESS</span></td>
-                    <td width="100"><span class="top-level-step">0.01s</span></td>
+
+                    <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                    <td width="100"><span class="top-level-step">004ms</span></td>
                 </tr>
                 <tr class="test-SUCCESS">
+
                     <td width="50" class="step-icon">
-                        <a name="2"/>
+                        <a name="2"></a>
                             <a href="javaScript:void(0)" onClick="toggleDiv('stepSection2')"
                                style="display:block">
-                                <i class="fa fa-plus-square-o imgstepSection2 success-icon"
-                                   style="margin-left: 20px; float:left;  padding-right:5px"></i>
+                                <i class="bi bi-plus-square imgstepSection2 success-icon"
+                                   style="margin-left: 20px; float:left; padding-right:5px"></i>
                             </a>
                     </td>
-                    <td>
+
+                    <td class="step-description-column">
                         <div class="step-description">
                             <a href="javaScript:void(0)" onClick="toggleDiv('stepSection2')"
                                style="display:block;">
                                 <span class="top-level-step">
-                                And realizo la consulta
-                            </span>
+                                                And realizo la consulta
+                                        </span>
                             </a>
                             <span class="evidence">
-                            </span>
+                                </span>
                         </div>
                     </td>
-                    <td width="100"><span class="top-level-step">SUCCESS</span></td>
-                    <td width="100"><span class="top-level-step">6.71s</span></td>
-                </tr>
-                <tr>
-                    <td colspan="5">
-                        <table id="stepSection2" style="display:none; width:100%">
 
+                    <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                    <td width="100"><span class="top-level-step">7s 401ms</span></td>
+                </tr>
+                    <tr>
+                        <td colspan="5">
+                            <table id="stepSection2" class="step-table-nested" style="display:none;">
                 <tr class="test-SUCCESS">
-                    <td width="50" class="step-icon">
-                        <a name="2-0"/>
+
+                    <td width="70" class="step-icon">
+                        <a name="2-0"></a>
                             <a href="javaScript:void(0)" onClick="toggleDiv('stepSection2-0')"
                                style="display:block">
-                                <i class="fa fa-plus-square-o imgstepSection2-0 success-icon"
-                                   style="margin-left: 40px; float:left;  padding-right:5px"></i>
+                                <i class="bi bi-plus-square imgstepSection2-0 success-icon"
+                                   style="margin-left: 40px; float:left; padding-right:5px"></i>
                             </a>
                     </td>
-                    <td>
+
+                    <td class="step-description-column">
                         <div class="step-description">
                             <a href="javaScript:void(0)" onClick="toggleDiv('stepSection2-0')"
                                style="display:block;">
                                 <span class="nested-step">
-                                Se debe obtener una respuesta exitosa del servicio
-                            </span>
+                                                Se debe obtener una respuesta exitosa del servicio
+                                        </span>
                             </a>
                             <span class="evidence">
-                            </span>
+                                </span>
                         </div>
                     </td>
-                    <td width="100"><span class="nested-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-step">6.66s</span></td>
-                </tr>
-                <tr>
-                    <td colspan="5">
-                        <table id="stepSection2-0" style="display:none; width:100%">
 
+                    <td width="130"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">7s 373ms</span></td>
+                </tr>
+                    <tr>
+                        <td colspan="5">
+                            <table id="stepSection2-0" class="step-table-nested" style="display:none;">
                 <tr class="test-SUCCESS">
-                    <td width="50" class="step-icon">
-                        <a name="2-0-0"/>
-                            <span style="margin-left: 60px; margin-right: 5px;"
-                                  class="nested-group-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a></span>
+
+                    <td width="90" class="step-icon">
+                        <a name="2-0-0"></a>
+                            <span style="margin-left: 60px;"
+                                  class="nested-group-icon"><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a>
+                                </span>
                     </td>
-                    <td>
+
+                    <td class="step-description-column">
                         <div class="step-description">
                                 <span class="nested-group-step">
-                                GET https://restful-booker.herokuapp.com/booking?firstname=Luis&amp;lastname=Retamozo
-                            </span>
+                                                GET https://restful-booker.herokuapp.com/booking?firstname=John&amp;lastname=Smith
+                                        </span>
                             <span class="evidence">
-                                    <span class="piece-of-evidence">
-                        <span>
-                    <button type="button" class="btn btn-success btn-sm" data-toggle="collapse"
-                            data-target="#restModal-REST-5">
-                        REST Query
-                    </button>
-                </span>
-                        <!-- Modal -->
-                        <div class="rest-query-details">
-                            <div class="collapse multi-collapse" id="restModal-REST-5">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h4>Response</h4>
-                                            <p>Status code: 200</p>
-                                            <p>Content Type: application/json</p>
-                                            <h4>Request Headers</h4>
-                                            <pre>Accept=application/json<br>Content-Type=application/json; charset=UTF-8</pre>
-                                            <h4>Content Body</h4>
-                                            <pre></pre>
-                                            <h4>Request Cookies</h4>
-                                            <pre></pre>
-                                            <h4>Response Headers</h4>
-                                            <pre>Server: Cowboy<br>Connection: keep-alive<br>X-Powered-By: Express<br>Content-Type: application/json; charset=utf-8<br>Content-Length: 18<br>Etag: W/&quot;12-tMgwNsRaxCVaNcnrwars0ae9guI&quot;<br>Date: Thu, 20 Jan 2022 03:26:59 GMT<br>Via: 1.1 vegur</pre>
-                                        <h4>Response Body</h4>
-                                            <pre>[<br>    {<br>        &quot;bookingid&quot;: 19<br>    }<br>]</pre>
-                                    </div>
-                                </div>
+                                        <span class="piece-of-evidence">
+                <span>
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="collapse"
+                                data-target="#restModal-REST-5">
+                            REST Query
+                        </button>
+                    </span>
+                <!-- Modal -->
+                <div class="rest-query-details">
+                    <div class="collapse multi-collapse" id="restModal-REST-5">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4>Response</h4>
+                                    <p>URL: https://restful-booker.herokuapp.com/booking?firstname=John&lastname=Smith</p>
+                                    <p>Status code: 200</p>
+                                    <p>Content Type: null</p>
+                                    <h4>Request Headers</h4>
+                                    <pre>Accept=*/*</pre>
+                                    <h4>Response Headers</h4>
+                                    <pre>Server: Cowboy<br>Report-To: {&quot;group&quot;:&quot;heroku-nel&quot;,&quot;max_age&quot;:3600,&quot;endpoints&quot;:[{&quot;url&quot;:&quot;https://nel.heroku.com/reports?ts=1698165278&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;s=3Cb%2FAvkM7nFDeEp%2BJujkvxfpu4US0o7MffTn7OZgea4%3D&quot;}]}<br>Reporting-Endpoints: heroku-nel=https://nel.heroku.com/reports?ts=1698165278&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;s=3Cb%2FAvkM7nFDeEp%2BJujkvxfpu4US0o7MffTn7OZgea4%3D<br>Nel: {&quot;report_to&quot;:&quot;heroku-nel&quot;,&quot;max_age&quot;:3600,&quot;success_fraction&quot;:0.005,&quot;failure_fraction&quot;:0.05,&quot;response_headers&quot;:[&quot;Via&quot;]}<br>Connection: keep-alive<br>X-Powered-By: Express<br>Content-Type: application/json; charset=utf-8<br>Content-Length: 6501<br>Etag: W/&quot;1965-nkZKS1X8vMugUJdOxKkupDDi2RQ&quot;<br>Date: Tue, 24 Oct 2023 16:34:38 GMT<br>Via: 1.1 vegur</pre>
+                                <h4>Response Body</h4>
+                                    <pre>[<br>    {<br>        &quot;bookingid&quot;: 1174<br>    },<br>    {<br>        &quot;bookingid&quot;: 686<br>    },<br>    {<br>        &quot;bookingid&quot;: 1196<br>    },<br>    {<br>        &quot;bookingid&quot;: 98<br>    },<br>    {<br>        &quot;bookingid&quot;: 571<br>    },<br>    {<br>        &quot;bookingid&quot;: 1121<br>    },<br>    {<br>        &quot;bookingid&quot;: 637<br>    },<br>    {<br>        &quot;bookingid&quot;: 986<br>    },<br>    {<br>        &quot;bookingid&quot;: 960<br>    },<br>    {<br>        &quot;bookingid&quot;: 318<br>    },<br>    {<br>        &quot;bookingid&quot;: 89<br>    },<br>    {<br>        &quot;bookingid&quot;: 255<br>    },<br>    {<br>        &quot;bookingid&quot;: 878<br>    },<br>    {<br>        &quot;bookingid&quot;: 110<br>    },<br>    {<br>        &quot;bookingid&quot;: 1079<br>    },<br>    {<br>        &quot;bookingid&quot;: 683<br>    },<br>    {<br>        &quot;bookingid&quot;: 1028<br>    },<br>    {<br>        &quot;bookingid&quot;: 425<br>    },<br>    {<br>        &quot;bookingid&quot;: 1187<br>    },<br>    {<br>        &quot;bookingid&quot;: 126<br>    },<br>    {<br>        &quot;bookingid&quot;: 1234<br>    },<br>    {<br>        &quot;bookingid&quot;: 392<br>    },<br>    {<br>        &quot;bookingid&quot;: 900<br>    },<br>    {<br>        &quot;bookingid&quot;: 457<br>    },<br>    {<br>        &quot;bookingid&quot;: 946<br>    },<br>    {<br>        &quot;bookingid&quot;: 1140<br>    },<br>    {<br>        &quot;bookingid&quot;: 597<br>    },<br>    {<br>        &quot;bookingid&quot;: 879<br>    },<br>    {<br>        &quot;bookingid&quot;: 217<br>    },<br>    {<br>        &quot;bookingid&quot;: 375<br>    },<br>    {<br>        &quot;bookingid&quot;: 601<br>    },<br>    {<br>        &quot;bookingid&quot;: 525<br>    },<br>    {<br>        &quot;bookingid&quot;: 559<br>    },<br>    {<br>        &quot;bookingid&quot;: 474<br>    },<br>    {<br>        &quot;bookingid&quot;: 1177<br>    },<br>    {<br>        &quot;bookingid&quot;: 757<br>    },<br>    {<br>        &quot;bookingid&quot;: 315<br>    },<br>    {<br>        &quot;bookingid&quot;: 1199<br>    },<br>    {<br>        &quot;bookingid&quot;: 677<br>    },<br>    {<br>        &quot;bookingid&quot;: 956<br>    },<br>    {<br>        &quot;bookingid&quot;: 242<br>    },<br>    {<br>        &quot;bookingid&quot;: 530<br>    },<br>    {<br>        &quot;bookingid&quot;: 142<br>    },<br>    {<br>        &quot;bookingid&quot;: 293<br>    },<br>    {<br>        &quot;bookingid&quot;: 815<br>    },<br>    {<br>        &quot;bookingid&quot;: 1086<br>    },<br>    {<br>        &quot;bookingid&quot;: 749<br>    },<br>    {<br>        &quot;bookingid&quot;: 504<br>    },<br>    {<br>        &quot;bookingid&quot;: 36<br>    },<br>    {<br>        &quot;bookingid&quot;: 399<br>    },<br>    {<br>        &quot;bookingid&quot;: 327<br>    },<br>    {<br>        &quot;bookingid&quot;: 670<br>    },<br>    {<br>        &quot;bookingid&quot;: 428<br>    },<br>    {<br>        &quot;bookingid&quot;: 441<br>    },<br>    {<br>        &quot;bookingid&quot;: 94<br>    },<br>    {<br>        &quot;bookingid&quot;: 347<br>    },<br>    {<br>        &quot;bookingid&quot;: 433<br>    },<br>    {<br>        &quot;bookingid&quot;: 837<br>    },<br>    {<br>        &quot;bookingid&quot;: 119<br>    },<br>    {<br>        &quot;bookingid&quot;: 368<br>    },<br>    {<br>        &quot;bookingid&quot;: 173<br>    },<br>    {<br>        &quot;bookingid&quot;: 1227<br>    },<br>    {<br>        &quot;bookingid&quot;: 494<br>    },<br>    {<br>        &quot;bookingid&quot;: 75<br>    },<br>    {<br>        &quot;bookingid&quot;: 913<br>    },<br>    {<br>        &quot;bookingid&quot;: 809<br>    },<br>    {<br>        &quot;bookingid&quot;: 72<br>    },<br>    {<br>        &quot;bookingid&quot;: 223<br>    },<br>    {<br>        &quot;bookingid&quot;: 1106<br>    },<br>    {<br>        &quot;bookingid&quot;: 564<br>    },<br>    {<br>        &quot;bookingid&quot;: 1146<br>    },<br>    {<br>        &quot;bookingid&quot;: 312<br>    },<br>    {<br>        &quot;bookingid&quot;: 1222<br>    },<br>    {<br>        &quot;bookingid&quot;: 51<br>    },<br>    {<br>        &quot;bookingid&quot;: 359<br>    },<br>    {<br>        &quot;bookingid&quot;: 661<br>    },<br>    {<br>        &quot;bookingid&quot;: 384<br>    },<br>    {<br>        &quot;bookingid&quot;: 1031<br>    },<br>    {<br>        &quot;bookingid&quot;: 1242<br>    },<br>    {<br>        &quot;bookingid&quot;: 166<br>    },<br>    {<br>        &quot;bookingid&quot;: 1275<br>    },<br>    {<br>        &quot;bookingid&quot;: 122<br>    },<br>    {<br>        &quot;bookingid&quot;: 302<br>    },<br>    {<br>        &quot;bookingid&quot;: 765<br>    },<br>    {<br>        &quot;bookingid&quot;: 204<br>    },<br>    {<br>        &quot;bookingid&quot;: 178<br>    },<br>    {<br>        &quot;bookingid&quot;: 908<br>    },<br>    {<br>        &quot;bookingid&quot;: 930<br>    },<br>    {<br>        &quot;bookingid&quot;: 901<br>    },<br>    {<br>        &quot;bookingid&quot;: 573<br>    },<br>    {<br>        &quot;bookingid&quot;: 635<br>    },<br>    {<br>        &quot;bookingid&quot;: 980<br>    },<br>    {<br>        &quot;bookingid&quot;: 518<br>    },<br>    {<br>        &quot;bookingid&quot;: 562<br>    },<br>    {<br>        &quot;bookingid&quot;: 789<br>    },<br>    {<br>        &quot;bookingid&quot;: 920<br>    },<br>    {<br>        &quot;bookingid&quot;: 735<br>    },<br>    {<br>        &quot;bookingid&quot;: 268<br>    },<br>    {<br>        &quot;bookingid&quot;: 236<br>    },<br>    {<br>        &quot;bookingid&quot;: 134<br>    },<br>    {<br>        &quot;bookingid&quot;: 31<br>    },<br>    {<br>        &quot;bookingid&quot;: 513<br>    },<br>    {<br>        &quot;bookingid&quot;: 82<br>    },<br>    {<br>        &quot;bookingid&quot;: 1195<br>    },<br>    {<br>        &quot;bookingid&quot;: 703<br>    },<br>    {<br>        &quot;bookingid&quot;: 509<br>    },<br>    {<br>        &quot;bookingid&quot;: 994<br>    },<br>    {<br>        &quot;bookingid&quot;: 772<br>    },<br>    {<br>        &quot;bookingid&quot;: 531<br>    },<br>    {<br>        &quot;bookingid&quot;: 871<br>    },<br>    {<br>        &quot;bookingid&quot;: 1139<br>    },<br>    {<br>        &quot;bookingid&quot;: 557<br>    },<br>    {<br>        &quot;bookingid&quot;: 443<br>    },<br>    {<br>        &quot;bookingid&quot;: 1020<br>    },<br>    {<br>        &quot;bookingid&quot;: 148<br>    },<br>    {<br>        &quot;bookingid&quot;: 893<br>    },<br>    {<br>        &quot;bookingid&quot;: 1207<br>    },<br>    {<br>        &quot;bookingid&quot;: 1157<br>    },<br>    {<br>        &quot;bookingid&quot;: 224<br>    },<br>    {<br>        &quot;bookingid&quot;: 376<br>    },<br>    {<br>        &quot;bookingid&quot;: 388<br>    },<br>    {<br>        &quot;bookingid&quot;: 497<br>    },<br>    {<br>        &quot;bookingid&quot;: 1042<br>    },<br>    {<br>        &quot;bookingid&quot;: 1284<br>    },<br>    {<br>        &quot;bookingid&quot;: 907<br>    },<br>    {<br>        &quot;bookingid&quot;: 218<br>    },<br>    {<br>        &quot;bookingid&quot;: 1274<br>    },<br>    {<br>        &quot;bookingid&quot;: 1098<br>    },<br>    {<br>        &quot;bookingid&quot;: 1108<br>    },<br>    {<br>        &quot;bookingid&quot;: 309<br>    },<br>    {<br>        &quot;bookingid&quot;: 1281<br>    },<br>    {<br>        &quot;bookingid&quot;: 961<br>    },<br>    {<br>        &quot;bookingid&quot;: 863<br>    },<br>    {<br>        &quot;bookingid&quot;: 412<br>    },<br>    {<br>        &quot;bookingid&quot;: 769<br>    },<br>    {<br>        &quot;bookingid&quot;: 1285<br>    },<br>    {<br>        &quot;bookingid&quot;: 719<br>    },<br>    {<br>        &quot;bookingid&quot;: 758<br>    },<br>    {<br>        &quot;bookingid&quot;: 855<br>    },<br>    {<br>        &quot;bookingid&quot;: 1026<br>    },<br>    {<br>        &quot;bookingid&quot;: 647<br>    },<br>    {<br>        &quot;bookingid&quot;: 722<br>    },<br>    {<br>        &quot;bookingid&quot;: 655<br>    },<br>    {<br>        &quot;bookingid&quot;: 282<br>    },<br>    {<br>        &quot;bookingid&quot;: 741<br>    },<br>    {<br>        &quot;bookingid&quot;: 1181<br>    },<br>    {<br>        &quot;bookingid&quot;: 18<br>    },<br>    {<br>        &quot;bookingid&quot;: 814<br>    },<br>    {<br>        &quot;bookingid&quot;: 1085<br>    },<br>    {<br>        &quot;bookingid&quot;: 454<br>    },<br>    {<br>        &quot;bookingid&quot;: 200<br>    },<br>    {<br>        &quot;bookingid&quot;: 750<br>    },<br>    {<br>        &quot;bookingid&quot;: 836<br>    },<br>    {<br>        &quot;bookingid&quot;: 370<br>    },<br>    {<br>        &quot;bookingid&quot;: 915<br>    },<br>    {<br>        &quot;bookingid&quot;: 627<br>    },<br>    {<br>        &quot;bookingid&quot;: 208<br>    },<br>    {<br>        &quot;bookingid&quot;: 183<br>    },<br>    {<br>        &quot;bookingid&quot;: 1093<br>    },<br>    {<br>        &quot;bookingid&quot;: 281<br>    },<br>    {<br>        &quot;bookingid&quot;: 361<br>    },<br>    {<br>        &quot;bookingid&quot;: 1043<br>    },<br>    {<br>        &quot;bookingid&quot;: 537<br>    },<br>    {<br>        &quot;bookingid&quot;: 460<br>    },<br>    {<br>        &quot;bookingid&quot;: 487<br>    },<br>    {<br>        &quot;bookingid&quot;: 15<br>    },<br>    {<br>        &quot;bookingid&quot;: 615<br>    },<br>    {<br>        &quot;bookingid&quot;: 1191<br>    },<br>    {<br>        &quot;bookingid&quot;: 1169<br>    },<br>    {<br>        &quot;bookingid&quot;: 730<br>    },<br>    {<br>        &quot;bookingid&quot;: 160<br>    },<br>    {<br>        &quot;bookingid&quot;: 86<br>    },<br>    {<br>        &quot;bookingid&quot;: 1230<br>    },<br>    {<br>        &quot;bookingid&quot;: 21<br>    },<br>    {<br>        &quot;bookingid&quot;: 35<br>    },<br>    {<br>        &quot;bookingid&quot;: 821<br>    },<br>    {<br>        &quot;bookingid&quot;: 352<br>    },<br>    {<br>        &quot;bookingid&quot;: 46<br>    },<br>    {<br>        &quot;bookingid&quot;: 484<br>    },<br>    {<br>        &quot;bookingid&quot;: 1250<br>    },<br>    {<br>        &quot;bookingid&quot;: 185<br>    },<br>    {<br>        &quot;bookingid&quot;: 1160<br>    },<br>    {<br>        &quot;bookingid&quot;: 939<br>    },<br>    {<br>        &quot;bookingid&quot;: 135<br>    },<br>    {<br>        &quot;bookingid&quot;: 139<br>    },<br>    {<br>        &quot;bookingid&quot;: 801<br>    },<br>    {<br>        &quot;bookingid&quot;: 1065<br>    },<br>    {<br>        &quot;bookingid&quot;: 1057<br>    },<br>    {<br>        &quot;bookingid&quot;: 1092<br>    },<br>    {<br>        &quot;bookingid&quot;: 580<br>    },<br>    {<br>        &quot;bookingid&quot;: 931<br>    },<br>    {<br>        &quot;bookingid&quot;: 662<br>    },<br>    {<br>        &quot;bookingid&quot;: 802<br>    },<br>    {<br>        &quot;bookingid&quot;: 831<br>    },<br>    {<br>        &quot;bookingid&quot;: 660<br>    },<br>    {<br>        &quot;bookingid&quot;: 469<br>    },<br>    {<br>        &quot;bookingid&quot;: 418<br>    },<br>    {<br>        &quot;bookingid&quot;: 968<br>    },<br>    {<br>        &quot;bookingid&quot;: 602<br>    },<br>    {<br>        &quot;bookingid&quot;: 101<br>    },<br>    {<br>        &quot;bookingid&quot;: 712<br>    },<br>    {<br>        &quot;bookingid&quot;: 1184<br>    },<br>    {<br>        &quot;bookingid&quot;: 154<br>    },<br>    {<br>        &quot;bookingid&quot;: 1213<br>    },<br>    {<br>        &quot;bookingid&quot;: 872<br>    },<br>    {<br>        &quot;bookingid&quot;: 919<br>    },<br>    {<br>        &quot;bookingid&quot;: 1171<br>    },<br>    {<br>        &quot;bookingid&quot;: 1116<br>    },<br>    {<br>        &quot;bookingid&quot;: 828<br>    },<br>    {<br>        &quot;bookingid&quot;: 1038<br>    },<br>    {<br>        &quot;bookingid&quot;: 546<br>    },<br>    {<br>        &quot;bookingid&quot;: 773<br>    },<br>    {<br>        &quot;bookingid&quot;: 974<br>    },<br>    {<br>        &quot;bookingid&quot;: 926<br>    },<br>    {<br>        &quot;bookingid&quot;: 22<br>    },<br>    {<br>        &quot;bookingid&quot;: 37<br>    },<br>    {<br>        &quot;bookingid&quot;: 1205<br>    },<br>    {<br>        &quot;bookingid&quot;: 104<br>    },<br>    {<br>        &quot;bookingid&quot;: 410<br>    },<br>    {<br>        &quot;bookingid&quot;: 779<br>    },<br>    {<br>        &quot;bookingid&quot;: 187<br>    },<br>    {<br>        &quot;bookingid&quot;: 780<br>    },<br>    {<br>        &quot;bookingid&quot;: 988<br>    },<br>    {<br>        &quot;bookingid&quot;: 501<br>    },<br>    {<br>        &quot;bookingid&quot;: 270<br>    },<br>    {<br>        &quot;bookingid&quot;: 127<br>    },<br>    {<br>        &quot;bookingid&quot;: 339<br>    },<br>    {<br>        &quot;bookingid&quot;: 867<br>    },<br>    {<br>        &quot;bookingid&quot;: 340<br>    },<br>    {<br>        &quot;bookingid&quot;: 827<br>    },<br>    {<br>        &quot;bookingid&quot;: 692<br>    },<br>    {<br>        &quot;bookingid&quot;: 61<br>    },<br>    {<br>        &quot;bookingid&quot;: 808<br>    },<br>    {<br>        &quot;bookingid&quot;: 1018<br>    },<br>    {<br>        &quot;bookingid&quot;: 998<br>    },<br>    {<br>        &quot;bookingid&quot;: 249<br>    },<br>    {<br>        &quot;bookingid&quot;: 193<br>    },<br>    {<br>        &quot;bookingid&quot;: 1072<br>    },<br>    {<br>        &quot;bookingid&quot;: 887<br>    },<br>    {<br>        &quot;bookingid&quot;: 230<br>    },<br>    {<br>        &quot;bookingid&quot;: 844<br>    },<br>    {<br>        &quot;bookingid&quot;: 485<br>    },<br>    {<br>        &quot;bookingid&quot;: 726<br>    },<br>    {<br>        &quot;bookingid&quot;: 232<br>    },<br>    {<br>        &quot;bookingid&quot;: 1002<br>    },<br>    {<br>        &quot;bookingid&quot;: 1248<br>    },<br>    {<br>        &quot;bookingid&quot;: 944<br>    },<br>    {<br>        &quot;bookingid&quot;: 593<br>    },<br>    {<br>        &quot;bookingid&quot;: 1133<br>    },<br>    {<br>        &quot;bookingid&quot;: 1009<br>    },<br>    {<br>        &quot;bookingid&quot;: 822<br>    },<br>    {<br>        &quot;bookingid&quot;: 877<br>    },<br>    {<br>        &quot;bookingid&quot;: 393<br>    },<br>    {<br>        &quot;bookingid&quot;: 54<br>    },<br>    {<br>        &quot;bookingid&quot;: 450<br>    },<br>    {<br>        &quot;bookingid&quot;: 259<br>    },<br>    {<br>        &quot;bookingid&quot;: 690<br>    },<br>    {<br>        &quot;bookingid&quot;: 345<br>    },<br>    {<br>        &quot;bookingid&quot;: 1132<br>    },<br>    {<br>        &quot;bookingid&quot;: 608<br>    },<br>    {<br>        &quot;bookingid&quot;: 1252<br>    },<br>    {<br>        &quot;bookingid&quot;: 278<br>    },<br>    {<br>        &quot;bookingid&quot;: 199<br>    },<br>    {<br>        &quot;bookingid&quot;: 332<br>    },<br>    {<br>        &quot;bookingid&quot;: 642<br>    },<br>    {<br>        &quot;bookingid&quot;: 673<br>    },<br>    {<br>        &quot;bookingid&quot;: 1064<br>    },<br>    {<br>        &quot;bookingid&quot;: 549<br>    },<br>    {<br>        &quot;bookingid&quot;: 1109<br>    },<br>    {<br>        &quot;bookingid&quot;: 953<br>    },<br>    {<br>        &quot;bookingid&quot;: 796<br>    },<br>    {<br>        &quot;bookingid&quot;: 1269<br>    },<br>    {<br>        &quot;bookingid&quot;: 168<br>    },<br>    {<br>        &quot;bookingid&quot;: 79<br>    },<br>    {<br>        &quot;bookingid&quot;: 161<br>    },<br>    {<br>        &quot;bookingid&quot;: 1052<br>    },<br>    {<br>        &quot;bookingid&quot;: 1151<br>    },<br>    {<br>        &quot;bookingid&quot;: 1241<br>    },<br>    {<br>        &quot;bookingid&quot;: 447<br>    },<br>    {<br>        &quot;bookingid&quot;: 740<br>    },<br>    {<br>        &quot;bookingid&quot;: 846<br>    },<br>    {<br>        &quot;bookingid&quot;: 297<br>    },<br>    {<br>        &quot;bookingid&quot;: 648<br>    },<br>    {<br>        &quot;bookingid&quot;: 607<br>    },<br>    {<br>        &quot;bookingid&quot;: 538<br>    },<br>    {<br>        &quot;bookingid&quot;: 628<br>    },<br>    {<br>        &quot;bookingid&quot;: 943<br>    },<br>    {<br>        &quot;bookingid&quot;: 1262<br>    },<br>    {<br>        &quot;bookingid&quot;: 583<br>    },<br>    {<br>        &quot;bookingid&quot;: 857<br>    },<br>    {<br>        &quot;bookingid&quot;: 1119<br>    },<br>    {<br>        &quot;bookingid&quot;: 1049<br>    },<br>    {<br>        &quot;bookingid&quot;: 289<br>    },<br>    {<br>        &quot;bookingid&quot;: 697<br>    },<br>    {<br>        &quot;bookingid&quot;: 194<br>    },<br>    {<br>        &quot;bookingid&quot;: 177<br>    },<br>    {<br>        &quot;bookingid&quot;: 993<br>    },<br>    {<br>        &quot;bookingid&quot;: 621<br>    },<br>    {<br>        &quot;bookingid&quot;: 291<br>    },<br>    {<br>        &quot;bookingid&quot;: 1056<br>    },<br>    {<br>        &quot;bookingid&quot;: 679<br>    },<br>    {<br>        &quot;bookingid&quot;: 112<br>    },<br>    {<br>        &quot;bookingid&quot;: 1120<br>    },<br>    {<br>        &quot;bookingid&quot;: 58<br>    },<br>    {<br>        &quot;bookingid&quot;: 274<br>    },<br>    {<br>        &quot;bookingid&quot;: 109<br>    },<br>    {<br>        &quot;bookingid&quot;: 587<br>    },<br>    {<br>        &quot;bookingid&quot;: 45<br>    },<br>    {<br>        &quot;bookingid&quot;: 377<br>    },<br>    {<br>        &quot;bookingid&quot;: 709<br>    },<br>    {<br>        &quot;bookingid&quot;: 252<br>    },<br>    {<br>        &quot;bookingid&quot;: 467<br>    },<br>    {<br>        &quot;bookingid&quot;: 651<br>    },<br>    {<br>        &quot;bookingid&quot;: 570<br>    },<br>    {<br>        &quot;bookingid&quot;: 1254<br>    },<br>    {<br>        &quot;bookingid&quot;: 1102<br>    },<br>    {<br>        &quot;bookingid&quot;: 552<br>    },<br>    {<br>        &quot;bookingid&quot;: 1214<br>    },<br>    {<br>        &quot;bookingid&quot;: 1221<br>    },<br>    {<br>        &quot;bookingid&quot;: 1013<br>    },<br>    {<br>        &quot;bookingid&quot;: 502<br>    },<br>    {<br>        &quot;bookingid&quot;: 715<br>    },<br>    {<br>        &quot;bookingid&quot;: 1238<br>    },<br>    {<br>        &quot;bookingid&quot;: 262<br>    },<br>    {<br>        &quot;bookingid&quot;: 934<br>    },<br>    {<br>        &quot;bookingid&quot;: 1063<br>    },<br>    {<br>        &quot;bookingid&quot;: 967<br>    },<br>    {<br>        &quot;bookingid&quot;: 481<br>    },<br>    {<br>        &quot;bookingid&quot;: 1148<br>    },<br>    {<br>        &quot;bookingid&quot;: 87<br>    },<br>    {<br>        &quot;bookingid&quot;: 1036<br>    },<br>    {<br>        &quot;bookingid&quot;: 475<br>    },<br>    {<br>        &quot;bookingid&quot;: 405<br>    },<br>    {<br>        &quot;bookingid&quot;: 849<br>    },<br>    {<br>        &quot;bookingid&quot;: 1211<br>    },<br>    {<br>        &quot;bookingid&quot;: 408<br>    },<br>    {<br>        &quot;bookingid&quot;: 1128<br>    },<br>    {<br>        &quot;bookingid&quot;: 265<br>    },<br>    {<br>        &quot;bookingid&quot;: 756<br>    },<br>    {<br>        &quot;bookingid&quot;: 781<br>    },<br>    {<br>        &quot;bookingid&quot;: 316<br>    },<br>    {<br>        &quot;bookingid&quot;: 854<br>    },<br>    {<br>        &quot;bookingid&quot;: 739<br>    },<br>    {<br>        &quot;bookingid&quot;: 544<br>    },<br>    {<br>        &quot;bookingid&quot;: 1003<br>    },<br>    {<br>        &quot;bookingid&quot;: 12<br>    },<br>    {<br>        &quot;bookingid&quot;: 461<br>    },<br>    {<br>        &quot;bookingid&quot;: 26<br>    },<br>    {<br>        &quot;bookingid&quot;: 360<br>    },<br>    {<br>        &quot;bookingid&quot;: 398<br>    },<br>    {<br>        &quot;bookingid&quot;: 588<br>    },<br>    {<br>        &quot;bookingid&quot;: 306<br>    },<br>    {<br>        &quot;bookingid&quot;: 435<br>    },<br>    {<br>        &quot;bookingid&quot;: 1010<br>    },<br>    {<br>        &quot;bookingid&quot;: 213<br>    },<br>    {<br>        &quot;bookingid&quot;: 725<br>    },<br>    {<br>        &quot;bookingid&quot;: 634<br>    },<br>    {<br>        &quot;bookingid&quot;: 353<br>    }<br>]</pre>
                             </div>
                         </div>
-                                    </span>
-                            </span>
+                    </div>
+                </div>
+                                        </span>
+                                </span>
                         </div>
                     </td>
-                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-group-step">0s</span></td>
+
+                    <td width="130"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">001ms</span></td>
                 </tr>
 
-                        </table>
-                    </td>
-                <tr>
+                            </table>
+                        </td>
+                    </tr>
 
-                        </table>
-                    </td>
-                <tr>
+                            </table>
+                        </td>
+                    </tr>
                 <tr class="test-SUCCESS">
+
                     <td width="50" class="step-icon">
-                        <a name="3"/>
-                            <span style="margin-left: 20px; margin-right: 5px;"
-                                  class="top-level-icon"><a href='##beforetable'><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></a></span>
+                        <a name="3"></a>
+                            <span style="margin-left: 20px;"
+                                  class="top-level-icon"><a href='##beforetable'><i class='bi bi-check-circle-fill success-icon ' title='SUCCESS'></i></a>
+                                </span>
                     </td>
-                    <td>
+
+                    <td class="step-description-column">
                         <div class="step-description">
                                 <span class="top-level-step">
-                                Then valido que se realice correctamente la busqueda
-                            </span>
+                                                Then valido que se realice correctamente la busqueda
+                                        </span>
                             <span class="evidence">
-                            </span>
+                                </span>
                         </div>
                     </td>
-                    <td width="100"><span class="top-level-step">SUCCESS</span></td>
-                    <td width="100"><span class="top-level-step">0s</span></td>
-                </tr>
-                <tr class="test-SUCCESS">
-                        <td colspan="2"></td>
-                    <td width="100"><span class="top-level-step"><em>SUCCESS</em></span></td>
-                    <td width="100"><span class="top-level-step"><em>7.36s</em></span></td>
-                </tr>
 
-            </table>
+                    <td width="130"><span class="top-level-step">SUCCESS</span></td>
+                    <td width="100"><span class="top-level-step">005ms</span></td>
+                </tr>
+            <tr class="test-SUCCESS">
+                    <td colspan="2"></td>
+                <td width="130"><span class="top-level-step"><em>SUCCESS</em></span></td>
+                <td width="100"><span class="top-level-step"><em>8.56s</em></span></td>
+            </tr>
+
+        </table>
+    </div>
+</div>
+
+<div id="beforefooter"></div>
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-12">
+            <span class="version">Serenity BDD version 3.2.4</span>
         </div>
     </div>
-    <div id="beforefooter"></div>
+</div>
 
-
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12">
-                <span class="version">Serenity BDD version 2.0.81</span>
-            </div>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        function toggleDiv(divId) {
-            $("#" + divId).toggle();
-            var imgsrc = $(".img" + divId).attr('src');
-            if (imgsrc == 'images/plus.png') {
-                $(".img" + divId).attr("src", function () {
-                    return "images/minus.png";
-                });
-
-            } else {
-                $(".img" + divId).attr("src", function () {
-                    return "images/plus.png";
-                });
-            }
-        }
-    </script>
-
-
-    <script type="text/javascript">
-        //<![CDATA[
-
-        $(document).ready(function () {
-            $('img.screenshot').imgPreview({
-                imgCSS: {
-                    width: '500px'
-                },
-                distanceFromCursor: {top: 10, left: -200}
+<script type="text/javascript">
+    function toggleDiv(divId) {
+        $("#" + divId).toggle();
+        var imgsrc = $(".img" + divId).attr('src');
+        if (imgsrc == 'images/plus.png') {
+            $(".img" + divId).attr("src", function () {
+                return "images/minus.png";
             });
+
+        } else {
+            $(".img" + divId).attr("src", function () {
+                return "images/plus.png";
+            });
+        }
+    }
+</script>
+
+
+<script type="text/javascript">
+    //<![CDATA[
+
+    $(document).ready(function () {
+        $('img.screenshot').imgPreview({
+            imgCSS: {
+                width: '500px'
+            },
+            distanceFromCursor: {top: 10, left: -200}
         });
+    });
 
-        //]]>
-    </script>
-    <div id="imgPreviewContainer" style="position: absolute; top: 612px; left: 355px; display: none; " class=""><img
-                src="" style="display: none; "></div>
-    <div id="imgPreviewContainer2" style="position: absolute; top: 925px; left: 320px; display: none; " class="">
-        <img style="width: 200px; display: none; " src=""></div>
-    <div id="imgPreviewWithStyles" style="position: absolute; top: 1272px; left: 321px; display: none; " class="">
-        <img style="height: 200px; opacity: 1; display: none; " src=""></div>
-    <div id="imgPreviewWithStyles2" style="display: none; position: absolute; "><img style="height: 200px; "></div>
-    <div id="imgPreviewWithStyles3" style="display: none; position: absolute; "><img style="height: 200px; "></div>
+    //]]>
+</script>
+<div id="imgPreviewContainer" style="position: absolute; top: 612px; left: 355px; display: none; " class=""><img
+            src="" style="display: none; "></div>
+<div id="imgPreviewContainer2" style="position: absolute; top: 925px; left: 320px; display: none; " class="">
+    <img style="width: 200px; display: none; " src=""></div>
+<div id="imgPreviewWithStyles" style="position: absolute; top: 1272px; left: 321px; display: none; " class="">
+    <img style="height: 200px; opacity: 1; display: none; " src=""></div>
+<div id="imgPreviewWithStyles2" style="display: none; position: absolute; "><img style="height: 200px; "></div>
+<div id="imgPreviewWithStyles3" style="display: none; position: absolute; "><img style="height: 200px; "></div>
 
-    </body>
+</div>
+</body>
 </html>

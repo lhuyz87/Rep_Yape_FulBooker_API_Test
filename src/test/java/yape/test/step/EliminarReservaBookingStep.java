@@ -38,7 +38,7 @@ public class EliminarReservaBookingStep {
 	
 	@Step("Se debe obtener una respuesta exitosa del servicio")
 	public String ejecutarServicioEliminar() {
-		Response response =  responseServices.ejecutarServicioDelete(Variables.endPoint, util.metodoServicio, bookingId,"",Variables.token);
+		Response response =  responseServices.ejecutarServicioDelete(Variables.endPoint, util.metodoServicio, ActualizarReservaBookingStep.bookingId,"",Variables.token);
 		
 		response.then().assertThat().statusCode(201);
 		if(response.getStatusCode()==201) {

@@ -1,17 +1,20 @@
 package yape.test.definition;
 
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.And;
 import net.thucydides.core.annotations.Steps;
 
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
+import java.util.Map;
 
 import org.testng.Assert;
 
-import cucumber.api.DataTable;
+import io.cucumber.datatable.*;
 import yape.test.response.AuthResponse;
 import yape.test.step.StepAutenticacion;
 import yape.test.util.CucumberNewUtil;
@@ -36,16 +39,15 @@ public class CrearAutenticacionDefinition {
 
 
 	@And("^ingreso los valores de usuario y password$")
-	public void ingreso_los_valores_de_usuario_y_password(DataTable table) {
-		  CucumberNewUtil.ConvertDataTableToDict(table);
-	        List<List<String>> data = table.raw();
+	public void ingreso_los_valores_de_usuario_y_password(DataTable credenciales) {
+		  
+	        List<Map<String, String>> tableCrendeciales = credenciales.asMaps(String.class, String.class);
 
-	        for (int i = 1; i < data.size(); i++) {
-	            String usuario = CucumberNewUtil.GetCellValueWithRowIndex("usuario", i);
-	            String password = CucumberNewUtil.GetCellValueWithRowIndex("password", i);
+	
+	            String usuario = tableCrendeciales.get(0).get("usuario");
+	            String password = tableCrendeciales.get(0).get("password");
 	            stepAutenticacion.ingresarDatosUsuario(usuario, password);
-	   
-	        }
+	
 	    
 	}
 	

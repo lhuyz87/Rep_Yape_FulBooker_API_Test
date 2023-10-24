@@ -1,4 +1,0 @@
-"Story","Title","Result","Date","Stability","Duration (s)"
-"CRUD para la gesti�n de reservas","Validar se realice la busqueda del detalle por reserva","SUCCESS","2022-01-19T17:38:45.844-05:00[America/Bogota]","0.0","6.66"
-"CRUD para la gesti�n de reservas","Validar se realice la creación de una reserva","SUCCESS","2022-01-19T18:58:56.873-05:00[America/Bogota]","0.0","6.71"
-"CRUD para la gesti�n de reservas","Validar que se realice actualizaciones en los datos de la reserva","SUCCESS","2022-01-19T20:02:58.347-05:00[America/Bogota]","0.0","7.19"

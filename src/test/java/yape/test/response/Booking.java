@@ -4,7 +4,7 @@ package yape.test.response;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class BodyActualizarReservaResponse {
+public class Booking {
 	
 	@SerializedName("firstname")
 	@Expose
@@ -24,8 +24,22 @@ public class BodyActualizarReservaResponse {
 	
 	@SerializedName("bookingdates")
 	@Expose
-	private ActualizarReservaBookingdatesResponse actualizarReservaBookingdatesResponse;
+	private Bookingdates bookingdates;
 	
+	@SerializedName("depositpaid")
+	@Expose
+	private boolean depositpaid;
+	
+	
+
+	public boolean isDepositpaid() {
+		return depositpaid;
+	}
+
+	public void setDepositpaid(boolean depositpaid) {
+		this.depositpaid = depositpaid;
+	}
+
 	public String getFirstname() {
 		return firstname;
 	}
@@ -58,19 +72,17 @@ public class BodyActualizarReservaResponse {
 		this.additionalneeds = additionalneeds;
 	}
 
-	public ActualizarReservaBookingdatesResponse getActualizarReservaBookingdatesResponse() {
-		return actualizarReservaBookingdatesResponse;
+	public Bookingdates getBookingdates() {
+		return bookingdates;
 	}
 
-	public void setActualizarReservaBookingdatesResponse(
-			ActualizarReservaBookingdatesResponse actualizarReservaBookingdatesResponse) {
-		this.actualizarReservaBookingdatesResponse = actualizarReservaBookingdatesResponse;
+	public void setBookingdates(Bookingdates bookingdates) {
+		this.bookingdates = bookingdates;
 	}
 
+	
+	
 
-	
-	
-	
 	
 
 	

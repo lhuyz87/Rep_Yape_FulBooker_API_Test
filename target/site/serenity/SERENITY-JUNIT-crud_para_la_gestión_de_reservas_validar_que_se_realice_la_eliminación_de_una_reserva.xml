@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="0" name="CRUD para la gestión de reservas" skipped="0" tests="1" time="7.01" timestamp="2022-01-19 08:57:33"><testcase name="Validar que se realice la eliminación de una reserva"/></testsuite>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><testsuite errors="0" failures="0" name="CRUD para la gestión de reservas" skipped="0" tests="1" time="9.51" timestamp="2023-10-24 11:53:45"><testcase name="Validar que se realice la eliminación de una reserva"/></testsuite>

@@ -8,19 +8,31 @@ public class BodyCrearReservaResponse {
 	
 	@SerializedName("bookingid")
 	@Expose
-	private String bookingid;
+	private long bookingid;
+	
+	@SerializedName("booking")
+	@Expose
+	private Booking booking;
+	
+	
 
-	
-	
-	public String getBookingId() {
+	public Booking getBooking() {
+		return booking;
+	}
+
+	public void setBooking(Booking booking) {
+		this.booking = booking;
+	}
+
+	public long getBookingid() {
 		return bookingid;
 	}
 
-	public void setBookingId(String bookingid) {
+	public void setBookingid(long bookingid) {
 		this.bookingid = bookingid;
 	}
 
-	
+
 
 	
 }

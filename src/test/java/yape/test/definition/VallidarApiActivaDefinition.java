@@ -1,8 +1,10 @@
 package yape.test.definition;
 
-import cucumber.api.java.en.And;
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.Then;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+import io.cucumber.java.en.And;
 import net.thucydides.core.annotations.Steps;
 
 import static org.junit.Assert.assertEquals;
@@ -10,11 +12,10 @@ import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
-import org.jruby.RubyProcess.Sys;
+//import org.jruby.RubyProcess.Sys;
 
-import cucumber.api.DataTable;
 import yape.test.response.AuthResponse;
-import yape.test.response.BodyActualizarReservaResponse;
+import yape.test.response.Booking;
 import yape.test.response.BodyConsDetReservaResponse;
 import yape.test.response.BodyCrearReservaResponse;
 import yape.test.step.ActualizarReservaBookingStep;
