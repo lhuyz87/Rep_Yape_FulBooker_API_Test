@@ -25,8 +25,9 @@ pipeline {
         	steps {
         		script {
         			try {
-        				
-        				bat ("mvn test -Dcucumber.options=\"src/test/resources/features/ --tags \'${ESCENARIO}\' --glue yape.test.definition --plugin junit:target/cucumber/result.xml --plugin json:target/cucumber/counter.json\"")
+        					
+        				bat "mvn test -Dcucumber.features=src/test/resources/features/ -Dcucumber.filter.tags=${ESCENARIO} -Dcucumber.plugin=json:target/cucumber-reports/cucumber.json -Dcucumber.glue=yape.test.definition"
+						//bat ("mvn test -Dcucumber.options=\"src/test/resources/features/ --tags \'${ESCENARIO}\' --glue yape.test.definition --plugin junit:target/cucumber/result.xml --plugin json:target/cucumber/counter.json\"")
         				bat ("mvn serenity:aggregate")
         				echo 'Ejecucion de pruebas sin errores...'
         			}
